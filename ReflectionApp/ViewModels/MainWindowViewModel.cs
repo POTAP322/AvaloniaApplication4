@@ -60,6 +60,27 @@ namespace ReflectionApp.ViewModels
                 StatusMessage = $"Ошибка: {ex.Message}";
             }
         }
+        [ObservableProperty]
+        private ObservableCollection<string> _eventLogs = new();
+        private void SetupCreatureEvents()
+        {
+            if (_currentInstance is Dog dog)
+            {
+                dog.SoundGiven += (sender, args) => 
+                    EventLogs.Add($"[{DateTime.Now:T}] Собака {dog.GetType().Name} лает!");
+            }
+            else if (_currentInstance is Panther panther)
+            {
+                panther.SoundGiven += (sender, args) => 
+                    EventLogs.Add($"[{DateTime.Now:T}] Пантера {panther.GetType().Name} рычит!");
+                
+                panther.TreeClimbed += (sender, args) => 
+                    EventLogs.Add($"[{DateTime.Now:T}] Пантера залезла на дерево");
+                
+                panther.GetDownFromTree += (sender, args) => 
+                    EventLogs.Add($"[{DateTime.Now:T}] Пантера слезла с дерева");
+            }
+        }
 
         [RelayCommand]
         private void SelectClass()
@@ -83,6 +104,7 @@ namespace ReflectionApp.ViewModels
 
                 // Создаем экземпляр (speedStep=10, maxSpeed=50)
                 _currentInstance = Activator.CreateInstance(selectedType, 10, 50);
+                SetupCreatureEvents();
 
                 // Получаем методы класса
                 AvailableMethods.Clear();
@@ -133,22 +155,33 @@ namespace ReflectionApp.ViewModels
 
             try
             {
-                var parameters = MethodParameters
-                    .Select(p => Convert.ChangeType(p.Value, p.Type))
-                    .ToArray();
-
-                var result = SelectedMethod.Invoke(_currentInstance, parameters);
-                StatusMessage = $"Метод выполнен! Результат: {result ?? "null"}";
-
-                // Обновляем скорость, если это существо
+                // Вызываем метод
+                SelectedMethod.Invoke(_currentInstance, null);
+                
+                // Принудительно обновляем статус для Move/Stand
                 if (_currentInstance is ICreature creature)
                 {
-                    StatusMessage += $"\nТекущая скорость: {creature.Speed}";
+                    StatusMessage = $"Текущая скорость: {creature.Speed}";
+                    
+                    // Добавляем запись в лог
+                    if (SelectedMethod.Name == "Move" || SelectedMethod.Name == "Stand")
+                    {
+                        EventLogs.Add($"[{DateTime.Now:T}] {SelectedMethod.Name} → Скорость: {creature.Speed}");
+                    }
+                    else
+                    {
+                        EventLogs.Add($"[{DateTime.Now:T}] Вызван метод: {SelectedMethod.Name}");
+                    }
+                }
+                else
+                {
+                    EventLogs.Add($"[{DateTime.Now:T}] Вызван метод: {SelectedMethod.Name}");
                 }
             }
             catch (Exception ex)
             {
                 StatusMessage = $"Ошибка: {ex.InnerException?.Message ?? ex.Message}";
+                EventLogs.Add($"[{DateTime.Now:T}] Ошибка: {ex.InnerException?.Message ?? ex.Message}");
             }
         }
 
