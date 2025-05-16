@@ -64,25 +64,47 @@ namespace ReflectionApp.ViewModels
         [RelayCommand]
         private void SelectClass()
         {
-            if (_loadedAssembly == null || string.IsNullOrWhiteSpace(SelectedClass)) return;
-
-            var selectedType = _loadedAssembly.GetType($"{_loadedAssembly.GetName().Name}.{SelectedClass}");
-            if (selectedType == null) return;
-
-            // Создаем экземпляр существа (speedStep=10, maxSpeed=50)
-            _currentInstance = Activator.CreateInstance(selectedType, 10, 50);
-
-            // Получаем методы
-            AvailableMethods.Clear();
-            var methods = selectedType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                .Where(m => !m.IsSpecialName); // Исключаем свойства/события
-
-            foreach (var method in methods)
+            if (_loadedAssembly == null || string.IsNullOrWhiteSpace(SelectedClass)) 
             {
-                AvailableMethods.Add(method);
+                StatusMessage = "Сборка не загружена или класс не выбран";
+                return;
             }
 
-            StatusMessage = $"Выбран класс: {SelectedClass} (доступно методов: {methods.Count()})";
+            try
+            {
+                // Ищем тип с учетом namespace
+                var selectedType = _loadedAssembly.GetType($"AvaloniaApplication2.Models.{SelectedClass}");
+                
+                if (selectedType == null)
+                {
+                    StatusMessage = $"Класс {SelectedClass} не найден в сборке";
+                    return;
+                }
+
+                // Создаем экземпляр (speedStep=10, maxSpeed=50)
+                _currentInstance = Activator.CreateInstance(selectedType, 10, 50);
+
+                // Получаем методы класса
+                AvailableMethods.Clear();
+                var methods = selectedType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                    .Where(m => !m.IsSpecialName); // Исключаем свойства/события
+
+                foreach (var method in methods)
+                {
+                    AvailableMethods.Add(method);
+                }
+
+                StatusMessage = $"Выбран класс: {SelectedClass} (методов: {methods.Count()})";
+                
+                // Логирование для отладки
+                Console.WriteLine($"Тип найден: {selectedType.FullName}");
+                Console.WriteLine($"Методы: {string.Join(", ", methods.Select(m => m.Name))}");
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Ошибка: {ex.Message}";
+                Console.WriteLine($"Ошибка: {ex}");
+            }
         }
 
         [RelayCommand]

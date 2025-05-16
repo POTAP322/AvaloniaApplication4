@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "XaISEuGGxBE=",
-  "success": false,
+  "dgSpecHash": "6gL9OU0+vqU=",
+  "success": true,
   "projectFilePath": "C:\\Users\\dima\\VisualStudioCodeProjects\\task4Project\\ReflectionApp\\ReflectionApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dima\\.nuget\\packages\\avalonia\\11.3.0\\avalonia.11.3.0.nupkg.sha512",
@@ -20,7 +20,7 @@
     "C:\\Users\\dima\\.nuget\\packages\\avalonia.themes.simple\\11.3.0\\avalonia.themes.simple.11.3.0.nupkg.sha512",
     "C:\\Users\\dima\\.nuget\\packages\\avalonia.win32\\11.3.0\\avalonia.win32.11.3.0.nupkg.sha512",
     "C:\\Users\\dima\\.nuget\\packages\\avalonia.x11\\11.3.0\\avalonia.x11.11.3.0.nupkg.sha512",
-    "C:\\Users\\dima\\.nuget\\packages\\communitytoolkit.mvvm\\8.2.1\\communitytoolkit.mvvm.8.2.1.nupkg.sha512",
+    "C:\\Users\\dima\\.nuget\\packages\\communitytoolkit.mvvm\\8.4.0\\communitytoolkit.mvvm.8.4.0.nupkg.sha512",
     "C:\\Users\\dima\\.nuget\\packages\\dynamicdata\\9.1.2\\dynamicdata.9.1.2.nupkg.sha512",
     "C:\\Users\\dima\\.nuget\\packages\\harfbuzzsharp\\7.3.0.3\\harfbuzzsharp.7.3.0.3.nupkg.sha512",
     "C:\\Users\\dima\\.nuget\\packages\\harfbuzzsharp.nativeassets.linux\\7.3.0.3\\harfbuzzsharp.nativeassets.linux.7.3.0.3.nupkg.sha512",
@@ -43,15 +43,5 @@
     "C:\\Users\\dima\\.nuget\\packages\\system.text.json\\9.0.2\\system.text.json.9.0.2.nupkg.sha512",
     "C:\\Users\\dima\\.nuget\\packages\\tmds.dbus.protocol\\0.21.2\\tmds.dbus.protocol.0.21.2.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1605",
-      "level": "Error",
-      "message": "Warning As Error: Detected package downgrade: CommunityToolkit.Mvvm from 8.4.0 to 8.2.1. Reference the package directly from the project to select a different version. \r\n ReflectionApp -> AvaloniaApplication2 -> CommunityToolkit.Mvvm (>= 8.4.0) \r\n ReflectionApp -> CommunityToolkit.Mvvm (>= 8.2.1)",
-      "libraryId": "CommunityToolkit.Mvvm",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  "logs": []
 }

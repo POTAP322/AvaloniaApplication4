@@ -147,3 +147,4 @@ C:\Users\dima\VisualStudioCodeProjects\task4Project\AvaloniaApplication2\obj\Deb
 C:\Users\dima\VisualStudioCodeProjects\task4Project\AvaloniaApplication2\obj\Debug\net9.0\Avalonia.F51675D9.Up2Date
 C:\Users\dima\VisualStudioCodeProjects\task4Project\AvaloniaApplication2\obj\Debug\net9.0\AvaloniaApplication2.genruntimeconfig.cache
 C:\Users\dima\VisualStudioCodeProjects\task4Project\AvaloniaApplication2\obj\Debug\net9.0\ref\AvaloniaApplication2.dll
+C:\Users\dima\VisualStudioCodeProjects\task4Project\AvaloniaApplication2\obj\Debug\net9.0\AvaloniaApplication2.sourcelink.json
