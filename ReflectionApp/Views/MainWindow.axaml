@@ -4,7 +4,7 @@
         xmlns:conv="using:ReflectionApp.Converters"
         x:Class="ReflectionApp.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Title="Управление существами через рефлексию" Width="650" Height="700">
+        Title="Управление существами через рефлексию" Width="850" Height="700">
     
     <Window.Resources>
         <conv:GreaterThanZeroValueConverter x:Key="GreaterThanZero"/>
@@ -13,17 +13,17 @@
     </Window.Resources>
 
     <Grid Margin="10" RowDefinitions="Auto,Auto,Auto,150,Auto,*,Auto">
-        <!-- Загрузка сборки -->
+        <!-- загрузка сборки -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="5">
-            <TextBox Text="{Binding AssemblyPath}" Watermark="Путь к DLL" Width="400"/>
+            <TextBox Text="{Binding AssemblyPath}" Watermark="Путь к DLL (AvaloniaApplication2/bin/Debug/net9.0/AvaloniaApplication2.dll)" Width="550"/>
             <Button Content="Загрузить сборку" Command="{Binding LoadAssemblyCommand}" Width="150"/>
         </StackPanel>
 
-        <!-- Выбор класса -->
+        <!-- выбор класса -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="5" Margin="0,10">
             <ComboBox ItemsSource="{Binding AvailableClasses}" 
                      SelectedItem="{Binding SelectedClass}"
-                     Width="400"
+                     Width="550"
                      IsEnabled="{Binding AvailableClasses.Count, Converter={StaticResource GreaterThanZero}}"
                      HorizontalContentAlignment="Left"
                      VerticalContentAlignment="Center">
@@ -39,7 +39,7 @@
                     IsEnabled="{Binding SelectedClass, Converter={StaticResource StringNotNullOrEmpty}}"/>
         </StackPanel>
 
-        <!-- Методы -->
+        <!-- методы -->
         <TextBlock Grid.Row="2" Text="Доступные методы:" Margin="0,10,0,5"/>
         <ListBox Grid.Row="3" 
                 ItemsSource="{Binding AvailableMethods}" 
@@ -51,14 +51,14 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <!-- Кнопка выполнения -->
+        <!-- кнопка выполнения -->
         <Button Grid.Row="4" 
                Content="Выполнить метод" 
                Command="{Binding ExecuteMethodCommand}"
                Margin="0,10"
                IsEnabled="{Binding SelectedMethod, Converter={StaticResource ObjectNotNull}}"/>
 
-        <!-- Параметры -->
+        <!-- параметры -->
         <ItemsControl Grid.Row="5" 
                      ItemsSource="{Binding MethodParameters}"
                      Margin="0,0,0,10">
@@ -74,8 +74,7 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <!-- Лог событий -->
-        <Border Grid.Row="6" BorderBrush="LightGray" BorderThickness="0,1" Margin="0,10"/>
+        <!-- лог событий -->
         <TextBlock Grid.Row="6" Text="Лог событий:" FontWeight="Bold" Margin="0,5"/>
         <ListBox Grid.Row="6" 
                 ItemsSource="{Binding EventLogs}" 

@@ -93,7 +93,7 @@ namespace ReflectionApp.ViewModels
 
             try
             {
-                // Ищем тип с учетом namespace
+                // поиск типа
                 var selectedType = _loadedAssembly.GetType($"AvaloniaApplication2.Models.{SelectedClass}");
                 
                 if (selectedType == null)
@@ -102,14 +102,14 @@ namespace ReflectionApp.ViewModels
                     return;
                 }
 
-                // Создаем экземпляр (speedStep=10, maxSpeed=50)
+                //экземпляр класса
                 _currentInstance = Activator.CreateInstance(selectedType, 10, 50);
                 SetupCreatureEvents();
 
-                // Получаем методы класса
+                //получаем методы
                 AvailableMethods.Clear();
                 var methods = selectedType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                    .Where(m => !m.IsSpecialName); // Исключаем свойства/события
+                    .Where(m => !m.IsSpecialName);
 
                 foreach (var method in methods)
                 {
@@ -155,15 +155,14 @@ namespace ReflectionApp.ViewModels
 
             try
             {
-                // Вызываем метод
+                //вызов метода
                 SelectedMethod.Invoke(_currentInstance, null);
                 
-                // Принудительно обновляем статус для Move/Stand
                 if (_currentInstance is ICreature creature)
                 {
                     StatusMessage = $"Текущая скорость: {creature.Speed}";
                     
-                    // Добавляем запись в лог
+                    //добавление записи в лог
                     if (SelectedMethod.Name == "Move" || SelectedMethod.Name == "Stand")
                     {
                         EventLogs.Add($"[{DateTime.Now:T}] {SelectedMethod.Name} → Скорость: {creature.Speed}");
