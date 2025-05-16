@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ReflectionApp.ViewModels"
+        x:Class="ReflectionApp.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Управление существами через рефлексию" Width="600" Height="500">
+    <StackPanel Margin="10" Spacing="10">
+        <!-- Загрузка сборки -->
+        <TextBox Text="{Binding AssemblyPath}" Watermark="Путь к DLL"/>
+        <Button Content="Загрузить сборку" Command="{Binding LoadAssemblyCommand}"/>
+
+        <!-- Выбор класса -->
+        <ComboBox ItemsSource="{Binding AvailableClasses}" SelectedItem="{Binding SelectedClass}"
+                  IsEnabled="{Binding AvailableClasses.Count, Converter={x:Static gt:GreaterThanZeroConverter}}"/>
+        <Button Content="Выбрать класс" Command="{Binding SelectClassCommand}"
+                IsEnabled="{Binding SelectedClass, Converter={x:Static nne:StringIsNotNullOrEmptyConverter}}"/>
+
+        <!-- Выбор метода -->
+        <ListBox ItemsSource="{Binding AvailableMethods}" SelectedItem="{Binding SelectedMethod}" Height="150">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Content="Выбрать метод" Command="{Binding SelectMethodCommand}"
+                IsEnabled="{Binding SelectedMethod, Converter={x:Static nne:ObjectIsNotNullConverter}}"/>
+
+        <!-- Параметры метода -->
+        <ItemsControl ItemsSource="{Binding MethodParameters}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="{Binding Name}" Width="100"/>
+                        <TextBox Text="{Binding Value}" Width="200"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Кнопка выполнения -->
+        <Button Content="Выполнить метод" Command="{Binding ExecuteMethodCommand}"
+                IsEnabled="{Binding SelectedMethod, Converter={x:Static nne:ObjectIsNotNullConverter}}"/>
+
+        <!-- Статус -->
+        <TextBox Text="{Binding StatusMessage}" IsReadOnly="True" TextWrapping="Wrap" Height="100"/>
+    </StackPanel>
+</Window>

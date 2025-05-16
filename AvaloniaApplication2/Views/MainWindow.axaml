@@ -1,0 +1,43 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:AvaloniaApplication2.ViewModels"
+        x:Class="AvaloniaApplication2.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Animal Simulation" Width="600" Height="600">
+    <StackPanel Margin="10" Spacing="8">
+        <!-- Dog -->
+        <TextBlock Text="Dog Speed:" FontWeight="Bold"/>
+        <TextBlock Text="{Binding DogSpeed}" Margin="5 0"/>
+        <StackPanel Orientation="Horizontal" Spacing="5">
+            <Button Content="Move" Command="{Binding DogMoveCommand}" MinWidth="80"/>
+            <Button Content="Stand" Command="{Binding DogStandCommand}" MinWidth="80"/>
+            <Button Content="Make Sound" Command="{Binding DogMakeSoundCommand}" MinWidth="80"/>
+        </StackPanel>
+        <Separator/>
+
+        <!-- Panther-->
+        <TextBlock Text="Panther Speed:" FontWeight="Bold"/>
+        <TextBlock Text="{Binding PantherSpeed}" Margin="5 0"/>
+        <StackPanel Orientation="Horizontal" Spacing="5">
+            <Button Content="Move" Command="{Binding PantherMoveCommand}" MinWidth="80"/>
+            <Button Content="Stand" Command="{Binding PantherStandCommand}" MinWidth="80"/>
+            <Button Content="Make Sound" Command="{Binding PantherMakeSoundCommand}" MinWidth="80"/>
+            <Button Content="Climb Tree" Command="{Binding PantherClimbTreeCommand}" MinWidth="80"/>
+            <Button Content="Get Down" Command="{Binding PantherGetDownCommand}" MinWidth="80"/>
+        </StackPanel>
+        <Separator/>
+
+        <!-- Turtle-->
+        <TextBlock Text="Turtle Speed:" FontWeight="Bold"/>
+        <TextBlock Text="{Binding TurtleSpeed}" Margin="5 0"/>
+        <StackPanel Orientation="Horizontal" Spacing="5">
+            <Button Content="Move" Command="{Binding TurtleMoveCommand}" MinWidth="80"/>
+            <Button Content="Stand" Command="{Binding TurtleStandCommand}" MinWidth="80"/>
+        </StackPanel>
+        <Separator/>
+
+        <!-- Logs -->
+        <TextBlock Text="Activity Log:" FontWeight="Bold" Margin="0 5"/>
+        <ListBox ItemsSource="{Binding Logs}" Height="150"/>
+    </StackPanel>
+</Window>
